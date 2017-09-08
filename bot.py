@@ -72,11 +72,13 @@ def main():
         seats = totalSeats
     else:
         seats = generalSeats
+    
+    page = session_requests.get(COURSE_URL)
+    eligibleSeats = int(re.findall(seats, str(page.content))[0])
+    print(eligibleSeats)
 
     while True:
         page = session_requests.get(COURSE_URL)
-        eligibleSeats = int(re.findall(seats, str(page.content))[0])
-        print(eligibleSeats)
         if eligibleSeats>0:
             loginAndRegister(dept, course, section, username, password)
             break
